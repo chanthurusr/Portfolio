@@ -2,221 +2,130 @@
 
 import { useRef, useState, useEffect } from "react"
 
-const skillsData = {
-  "Programming Languages": [
-    {
-      name: "Java",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
-      color: "#ED8B00",
-    },
-    {
-      name: "Python",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-      color: "#3776AB",
-    },
-    {
-      name: "HTML",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-      color: "#E34F26",
-    },
-    {
-      name: "CSS",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-      color: "#1572B6",
-    },
-    {
-      name: "JavaScript",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-      color: "#F7DF1E",
-    },
-  ],
-  "Query Language": [
-    {
-      name: "SQL",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
-      color: "#4479A1",
-    },
-    {
-      name: "MongoDB",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-      color: "#47A248",
-    },
-  ],
-  Frameworks: [
-    {
-      name: "React Native",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-      color: "#61DAFB",
-    },
-  ],
-  Tools: [
-    {
-      name: "GitHub",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
-      color: "#181717",
-    },
-    {
-      name: "Figma",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
-      color: "#F24E1E",
-    },
-  ],
-  Libraries: [
-    {
-      name: "ReactJS",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-      color: "#61DAFB",
-    },
-  ],
-  Others: [
-    {
-      name: "MERN Stack",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-      color: "#339933",
-    },
-    {
-      name: "Problem Solving",
-      icon: "🧠",
-      color: "#FF6B6B",
-    },
-  ],
+const skills = [
+  { name: "Java", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", category: "lang" },
+  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", category: "lang" },
+  { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", category: "lang" },
+  { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", category: "lang" },
+  { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", category: "lang" },
+  { name: "SQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", category: "db" },
+  { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", category: "db" },
+  { name: "React Native", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", category: "fw" },
+  { name: "ReactJS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", category: "lib" },
+  { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", category: "tool" },
+  { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", category: "tool" },
+  { name: "MERN Stack", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", category: "other" },
+  { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", category: "tool" },
+  { name: "Snowflake", icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/snowflake.svg", category: "tool" },
+  { name: "Networking", icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/cisco.svg", category: "other" },
+  { name: "Problem Solving", icon: "", category: "other" },
+]
+
+const categoryColors: Record<string, string> = {
+  lang: "from-amber-400 to-orange-500",
+  db: "from-emerald-400 to-green-600",
+  fw: "from-cyan-400 to-blue-500",
+  lib: "from-sky-400 to-indigo-500",
+  tool: "from-violet-400 to-purple-600",
+  other: "from-rose-400 to-pink-600",
+}
+
+const categoryBorders: Record<string, string> = {
+  lang: "hover:border-amber-400/60",
+  db: "hover:border-emerald-400/60",
+  fw: "hover:border-cyan-400/60",
+  lib: "hover:border-sky-400/60",
+  tool: "hover:border-violet-400/60",
+  other: "hover:border-rose-400/60",
 }
 
 export function SkillsSection() {
-  const [visibleCategories, setVisibleCategories] = useState<string[]>([])
-  const sectionRef = useRef<HTMLElement>(null)
+  const [visible, setVisible] = useState(false)
+  const ref = useRef<HTMLElement>(null)
 
   useEffect(() => {
     let mounted = true
+    const el = ref.current
+    if (!el) return
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (!mounted) return
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            Object.keys(skillsData).forEach((category, index) => {
-              setTimeout(() => {
-                if (mounted) {
-                  setVisibleCategories((prev) => [...prev, category])
-                }
-              }, index * 200)
-            })
-          }
-        })
+      ([entry]) => {
+        if (entry.isIntersecting && mounted) setVisible(true)
       },
-      { threshold: 0.3 },
+      { threshold: 0.2 },
     )
-
-    const currentRef = sectionRef.current
-    if (currentRef && observer) {
-      observer.observe(currentRef)
-    }
-
+    observer.observe(el)
     return () => {
       mounted = false
-      if (currentRef && observer) {
-        observer.unobserve(currentRef)
-      }
       observer.disconnect()
     }
   }, [])
 
-  // Flatten all skills into a single array
-  const allSkills = Object.values(skillsData).flat()
-
   return (
-    <section ref={sectionRef} id="skills" className="py-20 relative">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-electric-teal/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neon-blue/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
+    <section ref={ref} id="skills" className="py-24 relative">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-teal/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-electric-teal to-neon-blue bg-clip-text text-transparent cyberpunk-glow">
-              SKILLS
-            </span>
+          <h2 className="text-4xl lg:text-5xl font-extrabold heading-text tracking-tight">
+            <span className="bg-gradient-to-r from-teal to-navy bg-clip-text text-transparent">Skills</span>
           </h2>
         </div>
 
-        {/* Single Grid Layout for All Skills */}
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-6">
-            {allSkills.map((skill, index) => (
-              <SkillCard
-                key={`${skill.name}-${index}`}
-                skill={skill}
-                isVisible={visibleCategories.length > 0}
-                delay={index * 50}
-              />
-            ))}
-          </div>
+        <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-5">
+          {skills.map((skill, i) => (
+            <SkillHex key={skill.name} skill={skill} index={i} visible={visible} />
+          ))}
         </div>
       </div>
     </section>
   )
 }
 
-function SkillCard({
+function SkillHex({
   skill,
-  isVisible,
-  delay,
+  index,
+  visible,
 }: {
-  skill: { name: string; icon: string; color: string }
-  isVisible: boolean
-  delay: number
+  skill: (typeof skills)[0]
+  index: number
+  visible: boolean
 }) {
-  const [imageError, setImageError] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
+  const [imgError, setImgError] = useState(false)
+  const gradient = categoryColors[skill.category]
+  const borderHover = categoryBorders[skill.category]
 
   return (
     <div
-      className={`group relative transition-all duration-500 ${
-        isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
-      }`}
-      style={{ transitionDelay: `${delay}ms` }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className={`transition-all duration-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+      style={{ transitionDelay: `${index * 60}ms` }}
     >
       <div
-        className={`w-32 h-32 rounded-2xl bg-white/95 backdrop-blur-sm border border-gray-200 hover:border-electric-teal/50 transition-all duration-300 flex flex-col items-center justify-center p-4 hover:scale-110 hover:shadow-2xl group-hover:shadow-electric-teal/25 ${
-          isHovered ? "transform rotate-2" : ""
-        }`}
+        className={`group relative w-28 h-28 lg:w-32 lg:h-32 rounded-2xl bg-white border-2 border-border ${borderHover} shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center gap-2 cursor-default card-hover`}
       >
-        <div className="w-16 h-16 flex items-center justify-center mb-3">
-          {skill.icon.startsWith("http") && !imageError ? (
+        {/* Top gradient bar */}
+        <div className={`absolute top-0 left-3 right-3 h-1 rounded-b-full bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+
+        <div className="w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center">
+          {skill.icon && !imgError ? (
             <img
-              src={skill.icon || "/placeholder.svg"}
+              src={skill.icon}
               alt={skill.name}
-              className="w-full h-full object-contain"
-              onError={() => setImageError(true)}
+              className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+              onError={() => setImgError(true)}
               crossOrigin="anonymous"
             />
           ) : (
-            <div
-              className="w-full h-full rounded-lg flex items-center justify-center text-white font-bold text-2xl"
-              style={{ backgroundColor: skill.color }}
-            >
-              {skill.icon.startsWith("http") ? skill.name.charAt(0) : skill.icon}
+            <div className={`w-full h-full rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center`}>
+              <span className="text-white font-bold text-lg">{skill.name.charAt(0)}</span>
             </div>
           )}
         </div>
-        <span className="text-sm font-medium text-gray-700 text-center leading-tight">{skill.name}</span>
-        <div
-          className={`absolute inset-0 rounded-2xl transition-opacity duration-300 ${
-            isHovered ? "opacity-10" : "opacity-0"
-          }`}
-          style={{ backgroundColor: skill.color }}
-        />
-      </div>
 
-      {isHovered && (
-        <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-slate-800 text-white text-sm rounded-lg border border-electric-teal/30 whitespace-nowrap z-10 animate-in fade-in slide-in-from-bottom-2 duration-200">
+        <span className="text-xs lg:text-sm font-semibold text-foreground/80 text-center leading-tight px-1">
           {skill.name}
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-800"></div>
-        </div>
-      )}
+        </span>
+      </div>
     </div>
   )
 }

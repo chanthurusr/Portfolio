@@ -7,8 +7,8 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'Chanthuru S R | Full-Stack Developer Portfolio',
+  description: 'Portfolio of Chanthuru S R - Full-Stack Developer specializing in MERN stack, AI/ML, and innovative web solutions.',
   generator: 'v0.app',
   icons: {
     icon: [
