@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, useEffect, useCallback } from "react"
+import { useRef, useState, useEffect, useCallback, useMemo } from "react"
 
 interface SkillNode {
   name: string
@@ -8,53 +8,36 @@ interface SkillNode {
   description: string
   color: string
   angle: number
-  ring: number
 }
 
 const skills: SkillNode[] = [
-  { name: "Java", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", description: "Object-Oriented Programming", color: "#f89820", angle: 0, ring: 1 },
-  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", description: "Scripting & AI/ML", color: "#3776ab", angle: 24, ring: 1 },
-  { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", description: "Web Development", color: "#f7df1e", angle: 48, ring: 1 },
-  { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", description: "Markup Language", color: "#e34f26", angle: 72, ring: 1 },
-  { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", description: "Styling & Layouts", color: "#264de4", angle: 96, ring: 1 },
-  { name: "ReactJS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", description: "Frontend Library", color: "#61dafb", angle: 120, ring: 1 },
-  { name: "React Native", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", description: "Mobile Framework", color: "#61dafb", angle: 144, ring: 1 },
-  { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", description: "Server Runtime", color: "#339933", angle: 168, ring: 1 },
-  { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", description: "NoSQL Database", color: "#47a248", angle: 192, ring: 1 },
-  { name: "SQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", description: "Query Language", color: "#00758f", angle: 216, ring: 1 },
-  { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", description: "Cloud Platform", color: "#ff9900", angle: 240, ring: 1 },
-  { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", description: "Version Control", color: "#6e7681", angle: 264, ring: 1 },
-  { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", description: "UI/UX Design", color: "#a259ff", angle: 288, ring: 1 },
-  { name: "Snowflake", icon: "https://cdn.simpleicons.org/snowflake/29B5E8", description: "Data Cloud", color: "#29b5e8", angle: 312, ring: 1 },
-  { name: "MERN Stack", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", description: "Full-Stack Bundle", color: "#68a063", angle: 336, ring: 1 },
-  { name: "Networking", icon: "https://cdn.simpleicons.org/cisco/049fd9", description: "Computer Networks", color: "#049fd9", angle: 355, ring: 2 },
-  { name: "Problem Solving", icon: "", description: "Competitive Coding", color: "#ef4444", angle: 180, ring: 2 },
+  { name: "Java", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", description: "Object-Oriented Programming", color: "#f89820", angle: 0 },
+  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", description: "Scripting & AI/ML", color: "#3776ab", angle: 22.5 },
+  { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", description: "Web Development", color: "#f7df1e", angle: 45 },
+  { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", description: "Markup Language", color: "#e34f26", angle: 67.5 },
+  { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", description: "Styling & Layouts", color: "#264de4", angle: 90 },
+  { name: "ReactJS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", description: "Frontend Library", color: "#61dafb", angle: 112.5 },
+  { name: "React Native", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", description: "Mobile Framework", color: "#61dafb", angle: 135 },
+  { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", description: "Server Runtime", color: "#339933", angle: 157.5 },
+  { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", description: "NoSQL Database", color: "#47a248", angle: 180 },
+  { name: "SQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", description: "Query Language", color: "#00758f", angle: 202.5 },
+  { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", description: "Cloud Platform", color: "#ff9900", angle: 225 },
+  { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", description: "Version Control", color: "#6e7681", angle: 247.5 },
+  { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", description: "UI/UX Design", color: "#a259ff", angle: 270 },
+  { name: "Snowflake", icon: "https://cdn.simpleicons.org/snowflake/29B5E8", description: "Data Cloud", color: "#29b5e8", angle: 292.5 },
+  { name: "MERN Stack", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", description: "Full-Stack Bundle", color: "#68a063", angle: 315 },
+  { name: "Networking", icon: "https://cdn.simpleicons.org/cisco/049fd9", description: "Computer Networks", color: "#049fd9", angle: 337.5 },
 ]
 
-function getPosition(angleDeg: number, ring: number, centerX: number, centerY: number, radius: number) {
+function getPos(angleDeg: number, cx: number, cy: number, radius: number) {
   const rad = (angleDeg - 90) * (Math.PI / 180)
-  const r = ring === 2 ? radius * 0.55 : radius
-  return { x: centerX + r * Math.cos(rad), y: centerY + r * Math.sin(rad) }
-}
-
-function Particle({ x1, y1, x2, y2, delay, color }: { x1: number; y1: number; x2: number; y2: number; delay: number; color: string }) {
-  return (
-    <circle r="2.5" fill={color} opacity="0.8">
-      <animateMotion
-        dur={`${2.5 + delay * 0.3}s`}
-        repeatCount="indefinite"
-        begin={`${delay * 0.4}s`}
-        path={`M${x1},${y1} L${x2},${y2}`}
-      />
-      <animate attributeName="opacity" values="0;0.9;0.9;0" dur={`${2.5 + delay * 0.3}s`} repeatCount="indefinite" begin={`${delay * 0.4}s`} />
-    </circle>
-  )
+  return { x: cx + radius * Math.cos(rad), y: cy + radius * Math.sin(rad) }
 }
 
 export function SkillsSection() {
   const [visible, setVisible] = useState(false)
   const [hovered, setHovered] = useState<string | null>(null)
-  const [dims, setDims] = useState({ w: 800, h: 800 })
+  const [size, setSize] = useState(700)
   const sectionRef = useRef<HTMLElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -62,16 +45,23 @@ export function SkillsSection() {
     let mounted = true
     const el = sectionRef.current
     if (!el) return
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting && mounted) setVisible(true) }, { threshold: 0.1 })
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && mounted) setVisible(true)
+      },
+      { threshold: 0.1 }
+    )
     obs.observe(el)
-    return () => { mounted = false; obs.disconnect() }
+    return () => {
+      mounted = false
+      obs.disconnect()
+    }
   }, [])
 
   const handleResize = useCallback(() => {
     if (!containerRef.current) return
-    const rect = containerRef.current.getBoundingClientRect()
-    const size = Math.min(rect.width, 800)
-    setDims({ w: size, h: size })
+    const w = containerRef.current.getBoundingClientRect().width
+    setSize(Math.min(w, 700))
   }, [])
 
   useEffect(() => {
@@ -81,19 +71,36 @@ export function SkillsSection() {
     return () => window.removeEventListener("resize", handleResize)
   }, [handleResize])
 
-  const cx = dims.w / 2
-  const cy = dims.h / 2
-  const radius = dims.w * 0.4
-  const nodeSize = dims.w < 500 ? 32 : 42
+  const cx = size / 2
+  const cy = size / 2
+  const radius = size * 0.38
+  const nodeR = size < 450 ? 24 : 30
+
+  const positions = useMemo(
+    () => skills.map((s) => getPos(s.angle, cx, cy, radius)),
+    [cx, cy, radius]
+  )
 
   return (
     <section ref={sectionRef} id="skills" className="py-24 relative overflow-hidden">
-      {/* Neutral metallic gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#2c3e50] via-[#34495e] to-[#2c3e50]" />
-      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+      <div
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(135deg, #2c3e50 0%, #34495e 40%, #2c3e50 100%)" }}
+      />
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundSize: "20px 20px",
+        }}
+      />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className={`text-center mb-12 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div
+          className={`text-center mb-10 transition-all duration-700 ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
           <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
             Skill Constellation
           </h2>
@@ -102,112 +109,160 @@ export function SkillsSection() {
           </p>
         </div>
 
-        <div ref={containerRef} className="max-w-[800px] mx-auto flex items-center justify-center">
+        <div ref={containerRef} className="max-w-[700px] mx-auto flex items-center justify-center">
           <svg
-            viewBox={`0 0 ${dims.w} ${dims.h}`}
-            width={dims.w}
-            height={dims.h}
-            className={`transition-all duration-1000 ${visible ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
+            viewBox={`0 0 ${size} ${size}`}
+            width={size}
+            height={size}
+            className={`transition-all duration-1000 ${
+              visible ? "opacity-100 scale-100" : "opacity-0 scale-90"
+            }`}
           >
             <defs>
-              <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#00b894" stopOpacity="0.35" />
+              <radialGradient id="cGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#00b894" stopOpacity="0.3" />
                 <stop offset="100%" stopColor="#00b894" stopOpacity="0" />
               </radialGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+              <filter id="nGlow">
+                <feGaussianBlur stdDeviation="3" result="b" />
                 <feMerge>
-                  <feMergeNode in="coloredBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-              <filter id="nodeGlow">
-                <feGaussianBlur stdDeviation="6" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
+                  <feMergeNode in="b" />
                   <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
             </defs>
 
             {/* Web rings */}
-            {[0.3, 0.55, 0.8, 1].map((scale, i) => (
+            {[0.3, 0.55, 0.8, 1].map((s, i) => (
               <circle
-                key={i}
+                key={`ring-${i}`}
                 cx={cx}
                 cy={cy}
-                r={radius * scale}
+                r={radius * s}
                 fill="none"
                 stroke="rgba(255,255,255,0.06)"
-                strokeWidth="1"
-                strokeDasharray={i % 2 === 0 ? "4 8" : "none"}
+                strokeWidth={1}
+                strokeDasharray={i % 2 === 0 ? "4 8" : undefined}
               />
             ))}
 
-            {/* Cross web lines */}
+            {/* Radial spokes */}
             {Array.from({ length: 16 }).map((_, i) => {
               const a = (i * 22.5 - 90) * (Math.PI / 180)
               return (
                 <line
-                  key={`web-${i}`}
-                  x1={cx + radius * 0.15 * Math.cos(a)}
-                  y1={cy + radius * 0.15 * Math.sin(a)}
+                  key={`spoke-${i}`}
+                  x1={cx + radius * 0.12 * Math.cos(a)}
+                  y1={cy + radius * 0.12 * Math.sin(a)}
                   x2={cx + radius * 1.05 * Math.cos(a)}
                   y2={cy + radius * 1.05 * Math.sin(a)}
                   stroke="rgba(255,255,255,0.04)"
-                  strokeWidth="1"
+                  strokeWidth={1}
                 />
               )
             })}
 
-            {/* Connection lines from center to each node */}
+            {/* Connection lines + particles */}
             {skills.map((skill, i) => {
-              const pos = getPosition(skill.angle, skill.ring, cx, cy, radius)
-              const isHovered = hovered === skill.name
+              const p = positions[i]
+              const active = hovered === skill.name
               return (
-                <g key={`line-${i}`}>
+                <g key={`conn-${i}`}>
                   <line
                     x1={cx}
                     y1={cy}
-                    x2={pos.x}
-                    y2={pos.y}
-                    stroke={isHovered ? skill.color : "rgba(255,255,255,0.12)"}
-                    strokeWidth={isHovered ? 2 : 1}
+                    x2={p.x}
+                    y2={p.y}
+                    stroke={active ? skill.color : "rgba(255,255,255,0.12)"}
+                    strokeWidth={active ? 2 : 1}
                     style={{ transition: "all 0.4s ease" }}
                   />
-                  {/* Animated particles along lines */}
-                  <Particle x1={cx} y1={cy} x2={pos.x} y2={pos.y} delay={i} color={skill.color} />
-                  <Particle x1={pos.x} y1={pos.y} x2={cx} y2={cy} delay={i + 8} color={skill.color} />
+                  <circle r={2.5} fill={skill.color} opacity={0.7}>
+                    <animateMotion
+                      dur={`${2.5 + i * 0.15}s`}
+                      repeatCount="indefinite"
+                      begin={`${i * 0.3}s`}
+                      path={`M${cx},${cy} L${p.x},${p.y}`}
+                    />
+                  </circle>
+                  <circle r={2} fill={skill.color} opacity={0.5}>
+                    <animateMotion
+                      dur={`${3 + i * 0.12}s`}
+                      repeatCount="indefinite"
+                      begin={`${i * 0.5 + 1}s`}
+                      path={`M${p.x},${p.y} L${cx},${cy}`}
+                    />
+                  </circle>
                 </g>
               )
             })}
 
             {/* Center glow */}
-            <circle cx={cx} cy={cy} r={radius * 0.2} fill="url(#centerGlow)" />
+            <circle cx={cx} cy={cy} r={radius * 0.18} fill="url(#cGlow)" />
 
             {/* Center node */}
-            <g filter="url(#nodeGlow)">
-              <circle cx={cx} cy={cy} r={nodeSize * 0.9} fill="rgba(0,184,148,0.15)" stroke="rgba(0,184,148,0.5)" strokeWidth="2">
-                <animate attributeName="r" values={`${nodeSize * 0.85};${nodeSize * 0.95};${nodeSize * 0.85}`} dur="3s" repeatCount="indefinite" />
-              </circle>
-              <circle cx={cx} cy={cy} r={nodeSize * 0.65} fill="rgba(0,184,148,0.25)" stroke="#00b894" strokeWidth="1.5" />
+            <g filter="url(#nGlow)">
+              <circle
+                cx={cx}
+                cy={cy}
+                r={nodeR * 0.95}
+                fill="rgba(0,184,148,0.15)"
+                stroke="rgba(0,184,148,0.5)"
+                strokeWidth={2}
+              />
+              <circle
+                cx={cx}
+                cy={cy}
+                r={nodeR * 0.7}
+                fill="rgba(0,184,148,0.25)"
+                stroke="#00b894"
+                strokeWidth={1.5}
+              />
               {/* Monitor icon */}
-              <rect x={cx - 14} y={cy - 12} width="28" height="18" rx="2" fill="none" stroke="#00b894" strokeWidth="1.5" />
-              <line x1={cx - 6} y1={cy + 9} x2={cx + 6} y2={cy + 9} stroke="#00b894" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1={cx} y1={cy + 6} x2={cx} y2={cy + 9} stroke="#00b894" strokeWidth="1.5" />
-              <circle cx={cx - 4} cy={cy - 3} r="1.5" fill="#00b894" opacity="0.6" />
-              <circle cx={cx + 2} cy={cy - 3} r="1.5" fill="#00b894" opacity="0.8" />
-              <circle cx={cx + 7} cy={cy - 3} r="1.5" fill="#00b894" />
-              <text x={cx} y={cy + 22 + nodeSize * 0.5} textAnchor="middle" fill="#00b894" fontSize="13" fontWeight="700" fontFamily="Inter, sans-serif">
+              <rect
+                x={cx - 12}
+                y={cy - 10}
+                width={24}
+                height={16}
+                rx={2}
+                fill="none"
+                stroke="#00b894"
+                strokeWidth={1.5}
+              />
+              <line
+                x1={cx - 5}
+                y1={cy + 8}
+                x2={cx + 5}
+                y2={cy + 8}
+                stroke="#00b894"
+                strokeWidth={1.5}
+                strokeLinecap="round"
+              />
+              <line
+                x1={cx}
+                y1={cy + 6}
+                x2={cx}
+                y2={cy + 8}
+                stroke="#00b894"
+                strokeWidth={1.5}
+              />
+              <text
+                x={cx}
+                y={cy + nodeR + 18}
+                textAnchor="middle"
+                fill="#00b894"
+                fontSize={12}
+                fontWeight={700}
+              >
                 SKILLS
               </text>
             </g>
 
             {/* Skill nodes */}
             {skills.map((skill, i) => {
-              const pos = getPosition(skill.angle, skill.ring, cx, cy, radius)
-              const isHovered = hovered === skill.name
-              const r = isHovered ? nodeSize * 0.7 : nodeSize * 0.55
+              const p = positions[i]
+              const active = hovered === skill.name
+              const r = active ? nodeR * 0.72 : nodeR * 0.58
 
               return (
                 <g
@@ -215,69 +270,82 @@ export function SkillsSection() {
                   onMouseEnter={() => setHovered(skill.name)}
                   onMouseLeave={() => setHovered(null)}
                   style={{ cursor: "pointer" }}
-                  className={`transition-all duration-500 ${visible ? "opacity-100" : "opacity-0"}`}
                 >
-                  {/* Outer ring glow on hover */}
-                  {isHovered && (
-                    <circle cx={pos.x} cy={pos.y} r={r + 8} fill="none" stroke={skill.color} strokeWidth="1" opacity="0.4">
-                      <animate attributeName="r" values={`${r + 6};${r + 12};${r + 6}`} dur="1.5s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.4;0.1;0.4" dur="1.5s" repeatCount="indefinite" />
+                  {active && (
+                    <circle
+                      cx={p.x}
+                      cy={p.y}
+                      r={r + 10}
+                      fill="none"
+                      stroke={skill.color}
+                      strokeWidth={1}
+                      opacity={0.35}
+                    >
+                      <animate
+                        attributeName="r"
+                        values={`${r + 8};${r + 14};${r + 8}`}
+                        dur="1.5s"
+                        repeatCount="indefinite"
+                      />
+                      <animate
+                        attributeName="opacity"
+                        values="0.35;0.1;0.35"
+                        dur="1.5s"
+                        repeatCount="indefinite"
+                      />
                     </circle>
                   )}
 
-                  {/* Glass node background */}
                   <circle
-                    cx={pos.x}
-                    cy={pos.y}
+                    cx={p.x}
+                    cy={p.y}
                     r={r}
-                    fill={isHovered ? `${skill.color}30` : "rgba(255,255,255,0.07)"}
-                    stroke={isHovered ? skill.color : "rgba(255,255,255,0.15)"}
-                    strokeWidth={isHovered ? 2 : 1}
+                    fill={active ? `${skill.color}30` : "rgba(255,255,255,0.07)"}
+                    stroke={active ? skill.color : "rgba(255,255,255,0.15)"}
+                    strokeWidth={active ? 2 : 1}
                     style={{ transition: "all 0.3s ease" }}
-                    filter={isHovered ? "url(#glow)" : "none"}
+                    filter={active ? "url(#nGlow)" : undefined}
                   />
 
-                  {/* Icon via foreignObject */}
-                  {skill.icon ? (
-                    <foreignObject x={pos.x - 12} y={pos.y - 12} width="24" height="24">
+                  {skill.icon && (
+                    <foreignObject
+                      x={p.x - 11}
+                      y={p.y - 11}
+                      width={22}
+                      height={22}
+                    >
                       <img
                         src={skill.icon}
                         alt={skill.name}
-                        style={{ width: 24, height: 24, objectFit: "contain" }}
+                        width={22}
+                        height={22}
+                        style={{ objectFit: "contain" }}
                         crossOrigin="anonymous"
                       />
                     </foreignObject>
-                  ) : (
-                    <text x={pos.x} y={pos.y + 5} textAnchor="middle" fill={skill.color} fontSize="16" fontWeight="800">
-                      {skill.name.charAt(0)}
-                    </text>
                   )}
 
-                  {/* Label */}
                   <text
-                    x={pos.x}
-                    y={pos.y + r + 16}
+                    x={p.x}
+                    y={p.y + r + 14}
                     textAnchor="middle"
-                    fill={isHovered ? "#fff" : "rgba(255,255,255,0.7)"}
-                    fontSize={isHovered ? "12" : "11"}
-                    fontWeight={isHovered ? "700" : "500"}
-                    fontFamily="Inter, sans-serif"
+                    fill={active ? "#ffffff" : "rgba(255,255,255,0.65)"}
+                    fontSize={active ? 11 : 10}
+                    fontWeight={active ? 700 : 500}
                     style={{ transition: "all 0.3s ease" }}
                   >
                     {skill.name}
                   </text>
 
-                  {/* Description on hover */}
-                  {isHovered && (
+                  {active && (
                     <text
-                      x={pos.x}
-                      y={pos.y + r + 30}
+                      x={p.x}
+                      y={p.y + r + 27}
                       textAnchor="middle"
                       fill={skill.color}
-                      fontSize="9"
-                      fontWeight="500"
-                      fontFamily="Inter, sans-serif"
-                      opacity="0.9"
+                      fontSize={8}
+                      fontWeight={500}
+                      opacity={0.85}
                     >
                       {skill.description}
                     </text>
