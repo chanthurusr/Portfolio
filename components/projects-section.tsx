@@ -6,21 +6,36 @@ import { Calendar, Code } from "lucide-react"
 const projects = [
   {
     id: 1,
-    title: "Smart Urban Development System",
+    title: "Screen Time Monitoring System",
     year: "2025",
     description:
-      "Urban area development system integrating weather forecasting, air pollution monitoring, accident detection, and smart traffic management using OpenCV and real-time data processing.",
-    tech: ["Node.js", "React.js", "MongoDB", "Express.js", "OpenCV"],
+      "A real-time monitoring system that tracks application usage, window activity, and browser behaviour on the user's system. Captured active screen duration, extracted browser URLs and domains, and securely stored data in Snowflake for analytics.",
+    tech: ["Python", "Snowflake", "SQL"],
     features: [
-      "Real-time weather forecasting with 3-day historical data",
-      "Air pollution monitoring and alerts",
-      "Automated accident detection with emergency alerts",
-      "Smart traffic signal automation at zebra crossings",
-      "AI-driven pedestrian detection and traffic flow optimization",
+      "Real-time application usage and window activity tracking",
+      "Browser URL and domain extraction",
+      "Secure data storage in Snowflake Data Cloud",
+      "SQL-based reports for hourly, daily, and application-wise analysis",
+      "User-wise and website usage productivity insights",
     ],
   },
   {
     id: 2,
+    title: "Tech Matrix",
+    year: "2025",
+    description:
+      "A responsive website for the Computer Science Association to display events, member profiles, and updates. Designed interactive sections for announcements and highlights, ensuring smooth accessibility across all devices.",
+    tech: ["React"],
+    features: [
+      "Interactive event display and announcements",
+      "Member profiles and association updates",
+      "Responsive design across all devices",
+      "Student engagement-focused UI/UX",
+      "Smooth navigation and accessibility",
+    ],
+  },
+  {
+    id: 3,
     title: "Milk Delivery Management App",
     year: "2025",
     description:
@@ -35,7 +50,7 @@ const projects = [
     ],
   },
   {
-    id: 3,
+    id: 4,
     title: "Hostel Management System",
     year: "2024",
     description:
@@ -50,7 +65,7 @@ const projects = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     title: "Garbage Detection Using CNN",
     year: "2023",
     description:
@@ -62,6 +77,21 @@ const projects = [
       "Multi-category classification (cardboard, glass, metal)",
       "Model optimization using TensorFlow and Keras",
       "Published research findings on recycling efficiency",
+    ],
+  },
+  {
+    id: 6,
+    title: "Smart Urban Development System",
+    year: "2025",
+    description:
+      "Urban area development system integrating weather forecasting, air pollution monitoring, accident detection, and smart traffic management using OpenCV and real-time data processing.",
+    tech: ["Node.js", "React.js", "MongoDB", "Express.js", "OpenCV"],
+    features: [
+      "Real-time weather forecasting with 3-day historical data",
+      "Air pollution monitoring and alerts",
+      "Automated accident detection with emergency alerts",
+      "Smart traffic signal automation at zebra crossings",
+      "AI-driven pedestrian detection and traffic flow optimization",
     ],
   },
 ]
@@ -82,7 +112,7 @@ export function ProjectsSection() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <ProjectCard
               key={project.id}
