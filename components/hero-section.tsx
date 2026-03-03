@@ -12,11 +12,6 @@ export function HeroSection() {
 
       <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
         <div className="space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal/10 border border-teal/20">
-            <div className="w-2 h-2 rounded-full bg-teal animate-pulse" />
-            <span className="text-sm font-medium text-teal">Available for opportunities</span>
-          </div>
-
           <div className="space-y-4">
             <h1 className="text-5xl lg:text-7xl font-extrabold leading-tight heading-text tracking-tight">
               <span className="text-foreground">CHANTHURU</span>
@@ -24,7 +19,7 @@ export function HeroSection() {
               <span className="bg-gradient-to-r from-teal to-navy bg-clip-text text-transparent">S R</span>
             </h1>
             <h2 className="text-xl lg:text-2xl font-medium text-muted-foreground mono-text terminal-cursor">
-              Full-Stack & AI Developer
+              Full-Stack, Data Engineering Developer
             </h2>
           </div>
 
@@ -32,8 +27,11 @@ export function HeroSection() {
             <p className="text-foreground/80 leading-relaxed">
               B.E. Computer Science and Engineering student at{" "}
               <span className="font-semibold text-teal">Nandha Engineering College</span>, passionate about
-              full-stack development and AI. Specializing in the{" "}
-              <span className="font-semibold text-navy">MERN stack</span> and building intelligent web solutions.
+              building scalable full-stack applications and intelligent systems. I specialize in the{" "}
+              <span className="font-semibold text-navy">MERN stack</span>,{" "}
+              <span className="font-semibold text-navy">AI-driven solutions</span>,{" "}
+              <span className="font-semibold text-teal">AWS cloud services</span>, and data engineering concepts.
+              I am highly interested in exploring emerging technologies and continuously improving my skills to build innovative, real-world solutions.
             </p>
           </div>
 
