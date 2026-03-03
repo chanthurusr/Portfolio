@@ -55,12 +55,12 @@ const events = [
 const certs = [
   { name: "NPTEL - Cyber Security and Privacy", issuer: "NPTEL", type: "certificate", link: "https://drive.google.com/file/d/1fvqNh7u2rqSpRx278nGiXz5qncNI0ZRH/view" },
   { name: "Cyber Crimes in Electronic Payment", issuer: "Workshop", type: "certificate", link: "https://drive.google.com/file/d/1VOqUXJYJxmqm1-x1LpLs-bKs0nbZTphW/view" },
-  { name: "AR/VR Workshop", issuer: "Machenn Innovations", type: "certificate", link: "#" },
+  { name: "AR/VR Workshop", issuer: "Machenn Innovations", type: "certificate", link: "https://drive.google.com/drive/folders/12EoYbvqtE_CoWTYt0V6OxybgIS9R84Fg?usp=sharing" },
   { name: "Java (Basic)", issuer: "HackerRank", type: "certificate", link: "https://www.hackerrank.com/certificates/iframe/c0b021c55f64" },
   { name: "SQL (Basic)", issuer: "HackerRank", type: "certificate", link: "https://www.hackerrank.com/certificates/iframe/9d6432af447f" },
   { name: "Poster Making - FIRST PRIZE", issuer: "IRTT, Erode", type: "award", link: "https://drive.google.com/file/d/16ovalE1oOh-CGbwJvHDWdlr9mfXsp4af/view" },
-  { name: "Office Bearer", issuer: "Nandha Engineering College (2023-2025)", type: "position", link: "#" },
-  { name: "Core Member", issuer: "Nandha Engineering College (2025-2026)", type: "position", link: "#" },
+  { name: "Office Bearer", issuer: "Nandha Engineering College (2023-2025)", type: "position", link: "https://drive.google.com/drive/folders/12EoYbvqtE_CoWTYt0V6OxybgIS9R84Fg?usp=sharing" },
+  { name: "Core Member", issuer: "Nandha Engineering College (2025-2026)", type: "position", link: "https://drive.google.com/drive/folders/12EoYbvqtE_CoWTYt0V6OxybgIS9R84Fg?usp=sharing" },
 ]
 
 export function ExperienceSection() {
@@ -88,7 +88,7 @@ export function ExperienceSection() {
               <div key={e.id} className="relative">
                 <div className="absolute -left-[25px] top-6 w-4 h-4 rounded-full bg-teal border-4 border-background" />
                 <div
-                  className={`p-6 rounded-2xl bg-white border border-border shadow-sm cursor-pointer card-hover ${openEdu === e.id ? "ring-2 ring-teal/30" : ""}`}
+                  className={`p-6 rounded-2xl bg-card border border-border shadow-sm cursor-pointer card-hover ${openEdu === e.id ? "ring-2 ring-teal/30" : ""}`}
                   onClick={() => setOpenEdu(openEdu === e.id ? null : e.id)}
                 >
                   <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
@@ -216,7 +216,7 @@ export function ExperienceSection() {
                 href={c.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-5 rounded-xl bg-white border border-border shadow-sm hover:shadow-md hover:border-teal/40 transition-all duration-300 group card-hover"
+                className="p-5 rounded-xl bg-card border border-border shadow-sm hover:shadow-md hover:border-teal/40 transition-all duration-300 group card-hover"
               >
                 <h4 className="font-bold text-foreground group-hover:text-teal transition-colors text-sm leading-tight mb-1">
                   {c.name}

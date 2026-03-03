@@ -4,24 +4,24 @@
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 220 20% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --background: 40 30% 97%;
+    --foreground: 220 25% 12%;
+    --card: 40 20% 99%;
+    --card-foreground: 220 25% 12%;
+    --popover: 40 20% 99%;
+    --popover-foreground: 220 25% 12%;
     --primary: 174 100% 29%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 20% 10%;
-    --muted: 220 14% 96%;
+    --secondary: 40 20% 94%;
+    --secondary-foreground: 220 25% 12%;
+    --muted: 40 15% 93%;
     --muted-foreground: 220 10% 46%;
     --accent: 231 70% 56%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
+    --border: 40 15% 88%;
+    --input: 40 15% 88%;
     --ring: 174 100% 29%;
     --chart-1: 174 100% 29%;
     --chart-2: 231 70% 56%;
@@ -44,12 +44,11 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
 
-/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: hsl(40 20% 94%);
 }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #00b894, #4361ee);
@@ -60,25 +59,15 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Subtle grid background for light theme */
-.light-grid {
-  background-image:
-    linear-gradient(rgba(0, 184, 148, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 184, 148, 0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-/* Clean text styles */
 .heading-text {
   font-family: "Inter", sans-serif;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .mono-text {
   font-family: "JetBrains Mono", monospace;
 }
 
-/* Terminal cursor */
 .terminal-cursor::after {
   content: "";
   display: inline-block;
@@ -94,52 +83,46 @@ html {
   51%, 100% { opacity: 0; }
 }
 
-/* Smooth card hover */
 .card-hover {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
 }
 
-/* Gradient underline animation */
-@keyframes expand-line {
-  0% { width: 0; }
-  100% { width: 100%; }
-}
-
-/* Float animation */
 @keyframes float-gentle {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
 }
 
-/* Spin slow */
 @keyframes spin-slow {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-/* Pulse glow for light theme */
 @keyframes pulse-soft {
   0%, 100% { box-shadow: 0 0 0 0 rgba(0, 184, 148, 0.2); }
   50% { box-shadow: 0 0 0 8px rgba(0, 184, 148, 0); }
 }
 
-/* Shimmer for skill cards */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-/* Fade in up */
 @keyframes fade-in-up {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Reduced motion */
+/* Dot pattern background */
+.dot-pattern {
+  background-image: radial-gradient(circle, rgba(0, 184, 148, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Skill orbit ring */
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(var(--orbit-r)) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(var(--orbit-r)) rotate(-360deg); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

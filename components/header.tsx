@@ -55,7 +55,7 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/80 backdrop-blur-xl border-b border-border shadow-sm"
+          ? "bg-background/80 backdrop-blur-xl border-b border-border shadow-sm"
           : "bg-transparent"
       }`}
     >
@@ -93,7 +93,7 @@ export function Header() {
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden mt-4 p-4 rounded-xl bg-white border border-border shadow-lg">
+          <div className="md:hidden mt-4 p-4 rounded-xl bg-card border border-border shadow-lg">
             {navItems.map((item) => (
               <button
                 key={item.name}

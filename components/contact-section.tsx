@@ -28,7 +28,7 @@ export function ContactSection() {
             <a
               key={c.label}
               href={c.href}
-              className="flex items-center gap-4 p-5 rounded-2xl bg-white border border-border shadow-sm hover:border-teal/40 hover:shadow-md transition-all duration-300 group card-hover"
+              className="flex items-center gap-4 p-5 rounded-2xl bg-card border border-border shadow-sm hover:border-teal/40 hover:shadow-md transition-all duration-300 group card-hover"
             >
               <div className="p-3 rounded-xl bg-teal/10 text-teal group-hover:bg-teal group-hover:text-white transition-colors">
                 <c.icon className="w-5 h-5" />
@@ -42,7 +42,7 @@ export function ContactSection() {
 
           <div className="pt-4">
             <a
-              href="https://drive.google.com/file/d/1FzHipBrxCrfUue0epZmHzzpvRpRg7QjL/view?usp=sharing"
+              href="https://drive.google.com/file/d/1NsjvOVzdczbMO-2CsS5lBZMF01nwMEJZ/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 w-full px-6 py-4 bg-gradient-to-r from-teal to-navy text-white rounded-2xl font-semibold hover:shadow-lg hover:shadow-teal/20 transition-all duration-300 hover:-translate-y-0.5"

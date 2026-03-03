@@ -71,7 +71,7 @@ export function ProjectsSection() {
             <div
               key={p.id}
               onClick={() => setSelected(selected === p.id ? null : p.id)}
-              className={`group relative rounded-2xl bg-white border border-border shadow-sm overflow-hidden cursor-pointer transition-all duration-300 card-hover ${
+              className={`group relative rounded-2xl bg-card border border-border shadow-sm overflow-hidden cursor-pointer transition-all duration-300 card-hover ${
                 selected === p.id ? "ring-2 ring-teal/50 shadow-lg" : ""
               }`}
             >

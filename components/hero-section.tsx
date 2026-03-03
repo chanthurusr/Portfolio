@@ -28,7 +28,7 @@ export function HeroSection() {
             </h2>
           </div>
 
-          <div className="p-5 rounded-2xl bg-white border border-border shadow-sm">
+          <div className="p-5 rounded-2xl bg-card border border-border shadow-sm">
             <p className="text-foreground/80 leading-relaxed">
               B.E. Computer Science and Engineering student at{" "}
               <span className="font-semibold text-teal">Nandha Engineering College</span>, passionate about
@@ -48,7 +48,7 @@ export function HeroSection() {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-xl bg-white border border-border shadow-sm hover:border-teal/50 hover:shadow-md transition-all duration-300 group"
+                className="p-3 rounded-xl bg-card border border-border shadow-sm hover:border-teal/50 hover:shadow-md transition-all duration-300 group"
                 aria-label={s.label}
               >
                 <s.icon className="w-5 h-5 text-foreground/60 group-hover:text-teal transition-colors" />
@@ -57,7 +57,7 @@ export function HeroSection() {
           </div>
 
           <a
-            href="https://drive.google.com/file/d/1FzHipBrxCrfUue0epZmHzzpvRpRg7QjL/view?usp=sharing"
+            href="https://drive.google.com/file/d/1NsjvOVzdczbMO-2CsS5lBZMF01nwMEJZ/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-teal to-navy text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-teal/20 transition-all duration-300 hover:-translate-y-0.5"
